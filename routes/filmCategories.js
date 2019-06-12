@@ -1,8 +1,6 @@
 var express = require('express');
 var router = express.Router();
 
-var categoriesRouter = require('./filmCategories');
-
 router.get('/', function(req, res, next) {
   res.send([]);
 });
@@ -15,7 +13,7 @@ router.put('/:id', function(req, res, next) {
   if (req.body.id === req.params.id) {
     res.send(req.body);
   } else {
-    res.json({ error: 'requested id doesn\'t match film object' });
+    res.json({ error: 'requested id doesn\'t match category object' });
   }
 });
 
@@ -25,7 +23,5 @@ router.delete('/:id', function(req, res, next) {
     id: req.params.id
   });
 });
-
-router.use('/categories', categoriesRouter);
 
 module.exports = router;
