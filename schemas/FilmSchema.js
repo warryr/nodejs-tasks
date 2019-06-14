@@ -1,25 +1,29 @@
 var FilmSchema = {
   type: 'object',
-  required: ['id', 'title', 'description', 'avatar', 'gallery'],
   properties: {
     id: {
       type: 'string',
+      required: true,
     },
     title: {
       type: 'string',
+      required: true,
       minLength: 3,
     },
     description: {
       type: 'string',
+      required: true,
       minLength: 3,
       maxLength: 500,
     },
     avatar: {
       type: 'string',
+      required: true,
       pattern: 'https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)',
     },
     gallery: {
       type: 'array',
+      required: true,
       minItems: 4,
       items: {
         type: 'string',
