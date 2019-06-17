@@ -8,7 +8,7 @@ var CONNECTION_URL = 'mongodb+srv://admin:admin@app-6pb7g.mongodb.net/test?retry
 var DATABASE_NAME = 'app-db';
 
 var indexRouter = require('./routes/index');
-var filmsRouter = require('./routes/films');
+var filmsRouterInitializer = require('./routes/films');
 
 var app = express();
 var database;
@@ -30,7 +30,7 @@ client.connect(err => {
   app.use(express.static(path.join(__dirname, 'public')));
 
   app.use('/api/hello-world', indexRouter);
-  app.use('/api/films', filmsRouter);
+  app.use('/api/films', filmsRouterInitializer(database));
 
   app.use(function (req, res, next) {
     next(createError(404));
