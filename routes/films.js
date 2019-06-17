@@ -47,7 +47,11 @@ var initializeRouter = function(db) {
       { returnOriginal: false },
       function(err, doc) {
         if (err) throw err;
-        res.send(doc.value);
+        if (!doc.value) {
+          res.status(404).json({ error: "requested id doesn't match category object" });
+        } else {
+          res.send(doc.value);
+        }
       }
     );
   });

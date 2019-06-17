@@ -8,13 +8,16 @@ var router = express.Router();
 var initializeRouter = function(db) {
   router.get('/', function(req, res, next) {
     db.collection('film-categories')
-      .find({}, {
-        id: '$_id',
-        _id: 0,
-        title: 1,
-        description: 1,
-        films: 1,
-      })
+      .find(
+        {},
+        {
+          id: '$_id',
+          _id: 0,
+          title: 1,
+          description: 1,
+          films: 1,
+        }
+      )
       .toArray(function(err, doc) {
         if (err) throw err;
         res.send(doc);
@@ -35,10 +38,16 @@ var initializeRouter = function(db) {
     db.collection('film-categories').findOneAndUpdate(
       { _id: ObjectID(req.params.id) },
       { $set: req.body },
-      { returnOriginal: false },
+      {
+        returnOriginal: false,
+      },
       function(err, doc) {
         if (err) throw err;
-        res.send(doc.value);
+        if (!doc.value) {
+          res.status(404).json({ error: "requested id doesn't match category object" });
+        } else {
+          res.send(doc.value);
+        }
       }
     );
   });
