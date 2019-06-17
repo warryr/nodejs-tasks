@@ -1,12 +1,11 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
-router.get('/', function(req, res) {
+router.get('/', (req, res) => {
   if (req.query.name) {
     res.render('index', { title: 'Express', name: req.query.name });
   } else {
-    res.status(400);
-    res.json({ message: 'Missing name parameter' });
+    res.status(400).json({ message: 'Missing name parameter' });
   }
 });
 

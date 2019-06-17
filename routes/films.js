@@ -1,17 +1,15 @@
-var express = require('express');
-var ObjectID = require('mongodb').ObjectID;
-var validate = require('express-jsonschema').validate;
-var FilmSchema = require('../schemas/FilmSchema');
+import express from 'express';
+import { ObjectID } from 'mongodb';
+import { validate } from 'express-jsonschema';
+import FilmSchema from '../schemas/FilmSchema';
 
-var categoriesRouterInitializer = require('./filmCategories');
+import categoriesRouterInitializer from './filmCategories';
 
-var router = express.Router();
+const router = express.Router();
 
-var initializeRouter = function(db) {
-  // GET по категории
-
-  router.get('/', function(req, res, next) {
-    var query = req.query.category ? { category: req.query.category } : {};
+const initializeRouter = db => {
+  router.get('/', (req, res, next) => {
+    const query = req.query.category ? { category: req.query.category } : {};
     db.collection('films')
       .find(query, {
         id: '$_id',
@@ -24,44 +22,40 @@ var initializeRouter = function(db) {
         category: 1,
       })
       .limit(10)
-      .toArray(function(err, doc) {
+      .toArray((err, doc) => {
         if (err) throw err;
         res.send(doc);
       });
   });
 
-  router.post('/', validate({ body: FilmSchema }), function(req, res, next) {
-    db.collection('films').insertOne(req.body, function(err, doc) {
+  router.post('/', validate({ body: FilmSchema }), (req, res, next) => {
+    db.collection('films').insertOne(req.body, (err, doc) => {
       if (err) throw err;
-      var film = doc.ops[0];
+      const film = doc.ops[0];
       film.id = film._id;
       delete film._id;
       res.send(film);
     });
   });
 
-  router.put('/:id', validate({ body: FilmSchema }), function(req, res, next) {
+  router.put('/:id', validate({ body: FilmSchema }), (req, res, next) => {
     db.collection('films').findOneAndUpdate(
       { _id: ObjectID(req.params.id) },
       { $set: req.body },
       { returnOriginal: false },
-      function(err, doc) {
+      (err, doc) => {
         if (err) throw err;
-        if (!doc.value) {
-          res.status(404).json({ error: "requested id doesn't match category object" });
-        } else {
-          res.send(doc.value);
-        }
+        doc.value ? res.send(doc.value) : res.status(404).json({ error: "requested id doesn't match category object" });
       }
     );
   });
 
-  router.delete('/:id', function(req, res, next) {
+  router.delete('/:id', (req, res, next) => {
     db.collection('films').deleteOne(
       {
         _id: ObjectID(req.params.id),
       },
-      function(err, doc) {
+      (err, doc) => {
         if (err) throw err;
         if (doc.deletedCount) {
           res.json({
@@ -79,12 +73,10 @@ var initializeRouter = function(db) {
 
   router.use('/categories', categoriesRouterInitializer(db));
 
-  router.use(function(err, req, res, next) {
+  router.use((err, req, res, next) => {
     if (err.name === 'JsonSchemaValidation') {
-      var errors = {};
-      err.validations.body.map(function(object) {
-        errors[object.property] = object.messages[0];
-      });
+      const errors = {};
+      err.validations.body.map(object => (errors[object.property] = object.messages[0]));
       res.status(400).send(errors);
     } else {
       next(err);
@@ -94,4 +86,4 @@ var initializeRouter = function(db) {
   return router;
 };
 
-module.exports = initializeRouter;
+export default initializeRouter;

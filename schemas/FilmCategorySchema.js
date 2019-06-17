@@ -1,4 +1,4 @@
-var FilmCategorySchema = {
+const FilmCategorySchema = {
   type: 'object',
   properties: {
     title: {
@@ -22,4 +22,4 @@ var FilmCategorySchema = {
   },
 };
 
-module.exports = FilmCategorySchema;
+export default FilmCategorySchema;

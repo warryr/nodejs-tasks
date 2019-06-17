@@ -1,23 +1,22 @@
-var express = require('express');
-var path = require('path');
-var MongoClient = require('mongodb').MongoClient;
-var createError = require('http-errors');
-var logger = require('morgan');
+import express from 'express';
+import path from 'path';
+import { MongoClient } from 'mongodb';
+import createError from 'http-errors';
+import logger from 'morgan';
 
-var CONNECTION_URL = 'mongodb+srv://admin:admin@app-6pb7g.mongodb.net/test?retryWrites=true&w=majority';
-var DATABASE_NAME = 'app-db';
+import indexRouter from './routes/index';
+import filmsRouterInitializer from './routes/films';
 
-var indexRouter = require('./routes/index');
-var filmsRouterInitializer = require('./routes/films');
+const CONNECTION_URL = 'mongodb+srv://admin:admin@app-6pb7g.mongodb.net/test?retryWrites=true&w=majority';
+const DATABASE_NAME = 'app-db';
 
-var app = express();
-var database;
-var client = new MongoClient(CONNECTION_URL, { useNewUrlParser: true });
+const app = express();
+
+let database;
+const client = new MongoClient(CONNECTION_URL, { useNewUrlParser: true });
 
 client.connect(err => {
-  if (err) {
-    throw err;
-  }
+  if (err) throw err;
   database = client.db(DATABASE_NAME);
   console.log('Connected to `' + DATABASE_NAME + '`!');
 
@@ -32,11 +31,11 @@ client.connect(err => {
   app.use('/api/hello-world', indexRouter);
   app.use('/api/films', filmsRouterInitializer(database));
 
-  app.use(function(req, res, next) {
+  app.use((req, res, next) => {
     next(createError(404));
   });
 
-  app.use(function(err, req, res, next) {
+  app.use((err, req, res, next) => {
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};
 

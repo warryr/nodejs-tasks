@@ -1,4 +1,4 @@
-var FilmSchema = {
+const FilmSchema = {
   type: 'object',
   properties: {
     title: {
@@ -37,4 +37,4 @@ var FilmSchema = {
   },
 };
 
-module.exports = FilmSchema;
+export default FilmSchema;
