@@ -1,6 +1,6 @@
 module.exports = {
   async up(db) {
-    const col = await db.listCollections({ name: 'film-categories'}).toArray();
+    const col = await db.listCollections({ name: 'film-categories' }).toArray();
     if (col.length) {
       console.log('Collection already exists in MongoDB, exiting...');
     } else {
@@ -10,5 +10,5 @@ module.exports = {
 
   async down(db) {
     await db.dropCollection('film-categories');
-  }
+  },
 };
