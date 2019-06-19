@@ -1,7 +1,7 @@
 import express from 'express';
 import { ObjectID } from 'mongodb';
 import { validate } from 'express-jsonschema';
-import FilmCategorySchema from '../schemas/FilmCategorySchema';
+import FilmCategorySchema from '../jsonSchemas/filmCategorySchema';
 
 const router = express.Router();
 

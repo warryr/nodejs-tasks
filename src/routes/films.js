@@ -1,7 +1,7 @@
 import express from 'express';
 import { ObjectID } from 'mongodb';
 import { validate } from 'express-jsonschema';
-import FilmSchema from '../schemas/FilmSchema';
+import FilmSchema from '../jsonSchemas/filmSchema';
 
 import categoriesRouterInitializer from './filmCategories';
 
