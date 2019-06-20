@@ -34,7 +34,7 @@ module.exports = {
           'https://www.imdb.com/title/tt6966692/mediaviewer/rm869694208',
         ],
         rating: 5,
-        category: '5d089d57a07666ef9cfed361',
+        category: '5d089d57a07666ef9cfed360',
       },
       {
         _id: ObjectID('5d089b1d655a7c1ae81bb86c'),
@@ -50,7 +50,7 @@ module.exports = {
           'https://www.imdb.com/title/tt1343092/mediaviewer/rm1874306560',
         ],
         rating: 4,
-        category: '5d089d57a07666ef9cfed35f',
+        category: '5d089d57a07666ef9cfed360',
       },
       {
         _id: ObjectID('5d089b1d655a7c1ae81bb86d'),
@@ -67,7 +67,7 @@ module.exports = {
           'https://www.imdb.com/title/tt1485796/mediaviewer/rm2461150720',
         ],
         rating: 4,
-        category: '5d089d57a07666ef9cfed35e',
+        category: '5d089d57a07666ef9cfed360',
       },
       {
         _id: ObjectID('5d089b1d655a7c1ae81bb86e'),
@@ -82,7 +82,7 @@ module.exports = {
           'https://www.imdb.com/title/tt0349205/mediaviewer/rm1452510464',
         ],
         rating: 3,
-        category: '5d089d57a07666ef9cfed360',
+        category: '5d089d57a07666ef9cfed35e',
       },
     ]);
   },
